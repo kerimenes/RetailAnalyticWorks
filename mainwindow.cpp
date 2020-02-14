@@ -41,12 +41,24 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 #include <jsontoprotobuf.h>
-
+#include <demographic/demographic.h>
+#include <helper.h>
 void MainWindow::clicked(bool b)
 {
 	QPushButton *btn = qobject_cast<QPushButton*> (QObject::sender());
-	JsonToProtobuf *jbuf = new JsonToProtobuf("person.json");
-
+	if (btn->text().contains("2")) {
+		JsonToProtobuf *jbuf = new JsonToProtobuf("person.json", 1);
+		QList<retail::yca::Person> pers = jbuf->getPersonList();
+		DemographicManager *man = new DemographicManager();
+		man->Reload(pers);
+		auto x=man->GetResult("customers");
+		TemplateWidget *t = new TemplateWidget("New Template");
+		t->addYBarRange(0, 65);
+		t->addXBarSet("male", 0, helper::VectorToQList(x.male_ages));
+		t->addXBarSet("female", 1, helper::VectorToQList(x.female_ages));
+		t->addXBarInfo({"0-18", "18-25", "25-35", "35-45", "45+"});
+		t->doShow();
+	}
 }
 
 void MainWindow::on_b_tempButton_clicked()

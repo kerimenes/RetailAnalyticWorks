@@ -93,6 +93,7 @@ message CustomerDetails {
         Pass = 1;
         Look = 2;
     }
+    Action action = 2;
 }
 
 message CustomerData {

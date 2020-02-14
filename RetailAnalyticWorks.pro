@@ -28,11 +28,16 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
         templatewidget.cpp \
-    jsontoprotobuf.cpp
+    jsontoprotobuf.cpp \
+    customershappines.cpp \
+    demographic/demographic.cpp
 HEADERS += \
         mainwindow.h \
         templatewidget.h \
-    jsontoprotobuf.h
+    jsontoprotobuf.h \
+    customershappines.h \
+    helper.h \
+    demographic/demographic.h
 
 FORMS += \
         mainwindow.ui

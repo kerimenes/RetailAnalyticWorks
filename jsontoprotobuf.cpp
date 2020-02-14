@@ -1,9 +1,12 @@
 #include "jsontoprotobuf.h"
 #include <QFile>
 
-#include <grpc/analytic.pb.h>
-#include <grpc/analytic.grpc.pb.h>
 #include <google/protobuf/util/json_util.h>
+
+#include <QDebug>
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QJsonArray>
 
 static QString readFile(QString path)
 {
@@ -16,18 +19,12 @@ static QString readFile(QString path)
 
 	return jdata;
 }
-#include <QDebug>
-#include <QJsonObject>
-#include <QJsonDocument>
-#include <QJsonArray>
 
-JsonToProtobuf::JsonToProtobuf(const QString &file)
+JsonToProtobuf::JsonToProtobuf(const QString &file, int type)
 {
 	QString data = readFile(file);
 	QJsonDocument doc = QJsonDocument::fromJson(data.toUtf8());
 	QJsonArray personArray = doc.array();
-	QList<retail::yca::Person> plist;
-	qDebug() << "" << personArray.size();
 	for(int i = 0; i < personArray.size(); i++) {
 		retail::yca::Person person;
 		QString str = QString::fromUtf8(QJsonDocument(personArray[i].toObject()).toJson());
@@ -36,6 +33,9 @@ JsonToProtobuf::JsonToProtobuf(const QString &file)
 		plist << person;
 	}
 //	qDebug() << plist[0].id();
+}
 
-
+QList<retail::yca::Person> JsonToProtobuf::getPersonList()
+{
+	return plist;
 }
