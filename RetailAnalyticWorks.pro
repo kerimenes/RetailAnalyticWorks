@@ -27,10 +27,12 @@ include (pmedia.pri)
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-        templatewidget.cpp
+        templatewidget.cpp \
+    jsontoprotobuf.cpp
 HEADERS += \
         mainwindow.h \
-        templatewidget.h
+        templatewidget.h \
+    jsontoprotobuf.h
 
 FORMS += \
         mainwindow.ui

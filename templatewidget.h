@@ -10,12 +10,17 @@
 #include <QtCharts/QLegend>
 #include <QtCharts/QBarCategoryAxis>
 #include <QtCharts/QValueAxis>
+#include <QtCharts/QPieSeries>
 
 class TemplateWidget : public QWidget
 {
 	Q_OBJECT
 public:
-	explicit TemplateWidget(const QString &title, QWidget *parent = nullptr);
+	enum BarType {
+		GRAPHIC = 0,
+		DONAT = 1
+	};
+	explicit TemplateWidget(const QString &title, BarType type = GRAPHIC, QWidget *parent = nullptr);
 
 	void setVerticalsValues();
 	void doShow();
@@ -31,6 +36,7 @@ protected:
 	QtCharts::QBarSeries *series;
 	QtCharts::QBarCategoryAxis *axisX;
 	QtCharts::QValueAxis *axisY;
+	BarType type;
 
 };
 

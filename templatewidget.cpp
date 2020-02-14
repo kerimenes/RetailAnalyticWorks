@@ -2,11 +2,22 @@
 
 using namespace QtCharts;
 
-TemplateWidget::TemplateWidget(const QString &title, QWidget *parent)
+/*
+ * people.json
+ *
+ * [
+ *	{
+ *	},
+ *  {
+ *  }
+ * ]
+ * */
+
+TemplateWidget::TemplateWidget(const QString &title, BarType type, QWidget *parent)
 	: QWidget(parent)
 {
 	setWindowTitle(title);
-	setMaximumSize(500, 500);
+	this->type = type;
 
 	chart = new QChart();
 	chart->setTitle(title);
@@ -50,24 +61,37 @@ void TemplateWidget::addYBarRange(int min, int max)
 
 void TemplateWidget::doShow()
 {
-	chart->addSeries(series);
-	chart->setAnimationOptions(QChart::SeriesAnimations);
-	if (axisX) {
-		chart->addAxis(axisX, Qt::AlignBottom);
-		series->attachAxis(axisX);
-	}
-	if (axisY) {
-		chart->addAxis(axisY, Qt::AlignLeft);
-		series->attachAxis(axisY);
-	}
+	if (type == GRAPHIC) {
+		chart->addSeries(series);
+		chart->setAnimationOptions(QChart::SeriesAnimations);
+		if (axisX) {
+			chart->addAxis(axisX, Qt::AlignBottom);
+			series->attachAxis(axisX);
+		}
+		if (axisY) {
+			chart->addAxis(axisY, Qt::AlignLeft);
+			series->attachAxis(axisY);
+		}
 
-	chart->legend()->setVisible(true);
-	chart->legend()->setAlignment(Qt::AlignBottom);
+		chart->legend()->setVisible(true);
+		chart->legend()->setAlignment(Qt::AlignBottom);
 
-	QChartView *chartView = new QChartView(chart);
-	chartView->setRenderHint(QPainter::Antialiasing);
-	QVBoxLayout *l = new QVBoxLayout;
-	l->addWidget(chartView);
-	setLayout(l);
-	show();
+		QChartView *chartView = new QChartView(chart);
+		chartView->setRenderHint(QPainter::Antialiasing);
+		QVBoxLayout *l = new QVBoxLayout;
+		l->addWidget(chartView);
+		setLayout(l);
+		show();
+	} else if (type == DONAT) {
+#if 0
+		QPieSeries *series = new QPieSeries();
+		series->setHoleSize(0.35);
+		series->append("Protein 4.2%", 4.2);
+		QPieSlice *slice = series->append("Fat 15.6%", 15.6);
+		slice->setExploded();
+		slice->setLabelVisible();
+		series->append("Other 23.8%", 23.8);
+		series->append("Carbs 56.4%", 56.4);
+#endif
+	}
 }
