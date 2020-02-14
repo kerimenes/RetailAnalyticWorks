@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui printsupport charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -26,14 +26,14 @@ include (grpc/grpc.pri)
 include (pmedia.pri)
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
-
+        mainwindow.cpp \
+        templatewidget.cpp
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+        templatewidget.h
 
 FORMS += \
         mainwindow.ui
 
 RESOURCES += \
     resources.qrc
-

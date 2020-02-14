@@ -16,7 +16,7 @@ static void setStyleSheets(const QString &file)
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
-	setStyleSheets(":dark.qss");
+	setStyleSheets(":/stylesheets/dark.qss");
 	MainWindow w;
 	w.show();
 
