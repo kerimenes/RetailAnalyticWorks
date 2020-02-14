@@ -27,10 +27,12 @@ include (pmedia.pri)
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
+		heatmap.cpp \
         templatewidget.cpp
 HEADERS += \
         mainwindow.h \
-        templatewidget.h
+		templatewidget.h \
+		heatmap.h
 
 FORMS += \
         mainwindow.ui

@@ -2,8 +2,6 @@
 #define TEMPLATEWIDGET_H
 
 #include <QWidget>
-#include "qcustomplot.h"
-
 #include <QtCharts/QChartView>
 #include <QtCharts/QBarSeries>
 #include <QtCharts/QBarSet>
@@ -26,7 +24,6 @@ signals:
 
 public slots:
 protected:
-	QCustomPlot *cplot;
 	QtCharts::QChart *chart;
 	QtCharts::QBarSeries *series;
 	QtCharts::QBarCategoryAxis *axisX;

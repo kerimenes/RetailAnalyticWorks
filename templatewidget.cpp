@@ -1,7 +1,7 @@
 #include "templatewidget.h"
 
 using namespace QtCharts;
-
+#include <QVBoxLayout>
 TemplateWidget::TemplateWidget(const QString &title, QWidget *parent)
 	: QWidget(parent)
 {
