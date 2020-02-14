@@ -1,118 +1,62 @@
-syntax = "proto3";
-
-//version = 1516
+syntax="proto3";
 
 package retail;
 
-import "google/protobuf/empty.proto";
+import "google/protobuf/any.proto";
 
-service ProductService {
-    rpc GetStoreInfo (google.protobuf.Empty) returns (StoreQ);
-    rpc GetWheather  (google.protobuf.Empty) returns (Weather);
-    rpc GetSalesInfo (google.protobuf.Empty) returns (PosQ);
-    rpc GetHotSpotInfo (google.protobuf.Empty) returns (HotSpots);
-    rpc GetOutputVideoDatas (google.protobuf.Empty) returns (OutputVideoDatas);
-    rpc GetStoreFrontCamera (google.protobuf.Empty) returns (StoreFrontCamera);
+enum AttentionDirection {
+    NORTH = 0;
+    EAST = 1;
+    SOUTH = 2;
+    WEST = 3;
 }
 
-message CustomerQ {
-    int32 tc_no = 1;
-    enum Gender {
-        WOMAN = 0;
-        MAN = 1;
-    };
-    Gender gender = 2;
-    string name = 3;
-    int32 age = 4;
-    int32 weight = 5;
-    int32 height = 6;
-    string email = 7;
-    int32  isPlayingAgeof = 8;
-    string date = 9;
-    string time = 10;
+enum EmployeeAction {
+    UNKNOWN = 0;
+    CUSTOMER = 1;
+    STORE = 2;
+    INSTAGRAM = 3;
 }
 
-message EmployeeQ {
-    int32 tc_no = 1;
-    string name = 2;
-    enum Gender {
-        WOMAN = 0;
-        MAN = 1;
-    };
-    Gender gender = 3;
-    int32 age = 4;
-    int32 location = 5; // bölge 1.bölge 2.bölge 3.bölge
-    string date = 6;
-    string time = 7;
+message Person {
+    int64 id = 1;
+    google.protobuf.Any details = 2;
 }
 
-message ProductQ {
-    string category = 1;
-    string name = 2;
-    int32 id = 3; 
-    int32 buying_price = 4;
-    string colour = 5;
+message Product {
+    int32 id = 1;
+    google.protobuf.Any details = 2;
 }
 
-message ProductInfo {
-    ProductQ productQ = 1;
-    int32 stock_size = 2;
-    int32 location = 3; // ürün konum grubu 1.bölge 2.bölge 3.bölge 
-    int32 selling_price = 5;
+message Location {
+    float x = 1;
+    float y = 2;
+    float z = 3;
+    google.protobuf.Any details = 4;
 }
 
-message StoreQ {
-    string name = 1;
-    int32 id = 2;
-    string location = 3; // 45,49
-    repeated ProductInfo productInfo = 4;
-    repeated EmployeeQ employeeQ = 5;
-    int32 total_expense = 6; // gider
+message PersonData {
+    Location loc = 1;
+    int64 ts = 2;       //msecs since epoch
+    int64 id = 3;       //tc no
+    string image = 4;   //full path to image
 }
 
-message PosQ {
-    string date = 1; // 01.12.1994;
-    string time = 2; // 23:50
-    repeated ProductInfo productInfo = 3;
-    EmployeeQ employeeQ = 4;
-    CustomerQ customerQ = 5;
-    int32 store_id = 6;
+message EmployeeData {
+    PersonData data = 1;
+    EmployeeAction action = 2;
+    google.protobuf.Any details = 3;
 }
 
-message OutputVideoDatas { // Çıkarken ki kamera verisi
-    enum CustomerMood {
-        Happy = 0;
-        Sad = 1; 
-    };
-    CustomerMood mood = 1;
-    int32 tc_no = 2; // Eğer müşteri değilse sıfır gönder
-    int32 store_id = 3;
+message CustomerData {
+    PersonData data = 1;
+    AttentionDirection direction = 2;
+    google.protobuf.Any details = 3;
 }
 
-message StoreFrontCamera {
-    int32 store_id = 1;
-    int32 window_shoppers = 2;  // vitrine bakanlar
-    int32 passing_count = 3; // pass geçenler
-    int32 go_in_count = 4; // içeri giren 
-}
-
-message HotSpots {
-    int32 location = 1; // magaza iç bölge numaraları
-    int32 store_id = 2;
-    int32 counts = 3;
-    string date = 4;
-    string time = 5;
-    repeated EmployeeQ employeeQ = 6; // burda sadece yogunlugun oldugu bölgelerde çalışan mı yoksa customer mı var die bakıyoruz
-    repeated CustomerQ customerQ = 7;
-}
-
-message Weather {
-    enum Type {
-        CLOUDY = 0;
-        SNOWY = 1;
-        SUNNY = 2;
-        RAINY = 3;
-    };
-    Type w_type = 1;
-    string date = 2;
+message SalesData {
+    repeated int32 products = 1;
+    int32 customer = 2;
+    int32 employee = 3;
+    google.protobuf.Any details = 4;
 }
