@@ -2,20 +2,16 @@
 
 HeatMap::HeatMap(QObject *parent) : QObject(parent)
 {
-	xV.resize(24);
-	yV.resize(24);
-
+	heattable.resize(2000);
 }
 
 void HeatMap::addHeatData(int time, int x, int y)
 {
-	if(xV[time].size() < 2000)
-		xV[time].resize(2000);
-	if(yV[time].size() < 2000)
-		yV[time].resize(2000);
+	if( heattable[x].size()<2000)
+		heattable[x].resize(2000);
 
-	++xV[time][x];
-	++yV[time][y];
+	if(++heattable[x][y] > heatmax);
+		heatmax = heattable[x][y];
 }
 
 void HeatMap::addHotSpots()
@@ -27,6 +23,11 @@ void HeatMap::addHotSpots()
 	int width;
 	int height;
 	int center;
+
+	xmin = 0;
+	ymin = 0;
+	xmax = 0;
+	ymax = 0;
 
 	for (size_t i = 0; i < 20; ++i) {
 		deps0.
